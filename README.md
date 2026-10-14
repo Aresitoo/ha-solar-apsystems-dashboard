@@ -8,6 +8,16 @@ An ultra-responsive, high-density **Solar Photovoltaic & Microinverter Mission C
 
 ---
 
+## 📸 Visual Overview
+
+<p align="center">
+  <img src="assets/solar_rooftop_topology.png" width="48%" alt="Solar Rooftop Topology & Celestial Arc" />
+  <img src="assets/solar_inverter_analytics.png" width="48%" alt="Microinverter Cluster Telemetry & Economics" />
+</p>
+
+
+---
+
 ## 🌟 Key Features
 
 1. **Photovoltaic Rooftop SVG Topology Grid**:

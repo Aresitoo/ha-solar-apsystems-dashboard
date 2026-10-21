@@ -71,6 +71,16 @@
 
   // 1. Solar Rooftop Topology & Celestial Arc Card
   class SolarRooftopCard extends BaseSolarCard {
+    static getStubConfig() {
+      return {
+        panels: [
+          { row: 1, col: 1, inv: "704000000001", ch: 1, id: "000001", type: "h", rating: 450, desc: "Roof West String 1" },
+          { row: 1, col: 2, inv: "704000000001", ch: 2, id: "000001", type: "h", rating: 450, desc: "Roof West String 1" },
+          { row: 2, col: 1, inv: "704000000002", ch: 1, id: "000002", type: "h", rating: 450, desc: "Roof East String 1" },
+          { row: 2, col: 2, inv: "704000000002", ch: 2, id: "000002", type: "h", rating: 450, desc: "Roof East String 1" }
+        ]
+      };
+    }
     get cardBorder() { return 'rgba(255, 152, 0, 0.2)'; }
     renderContent(states, hass, config) {
   const defaultPanelList = [{"row": 1, "col": 3, "inv": "704000000001", "ch": 1, "id": "000001", "type": "h", "model": "DS3"}, {"row": 1, "col": 4, "inv": "704000000002", "ch": 1, "id": "000002", "type": "h", "model": "DS3"}, {"row": 1, "col": 5, "inv": "704000000003", "ch": 1, "id": "000003", "type": "h", "model": "DS3"}, {"row": 1, "col": 6, "inv": "704000000004", "ch": 1, "id": "000004", "type": "h", "model": "DS3"}, {"row": 2, "col": 3, "inv": "704000000001", "ch": 2, "id": "000001", "type": "h", "model": "DS3"}, {"row": 2, "col": 4, "inv": "704000000002", "ch": 2, "id": "000002", "type": "h", "model": "DS3"}, {"row": 2, "col": 5, "inv": "704000000003", "ch": 2, "id": "000003", "type": "h", "model": "DS3"}, {"row": 2, "col": 6, "inv": "704000000004", "ch": 2, "id": "000004", "type": "h", "model": "DS3"}, {"row": 3, "col": 1, "inv": "704000000005", "ch": 1, "id": "000005", "type": "v", "model": "DS3-H"}, {"row": 3, "col": 2, "inv": "704000000005", "ch": 2, "id": "000005", "type": "v", "model": "DS3-H"}, {"row": 3, "col": 3, "inv": "705000000006", "ch": 1, "id": "000006", "type": "h", "model": "DS3"}, {"row": 3, "col": 4, "inv": "705000000006", "ch": 2, "id": "000006", "type": "h", "model": "DS3"}, {"row": 3, "col": 5, "inv": "705000000007", "ch": 1, "id": "000007", "type": "h", "model": "DS3"}, {"row": 3, "col": 6, "inv": "705000000007", "ch": 2, "id": "000007", "type": "h", "model": "DS3"}, {"row": 4, "col": 1, "inv": "704000000008", "ch": 1, "id": "000008", "type": "v", "model": "DS3-H"}, {"row": 4, "col": 2, "inv": "704000000008", "ch": 2, "id": "000008", "type": "v", "model": "DS3-H"}];
@@ -1208,6 +1218,12 @@
 
   // 2. Solar PV Forecast Card (Solcast)
   class SolarForecastCard extends BaseSolarCard {
+    static getStubConfig() {
+      return {
+        forecast_today: "sensor.solcast_pv_forecast_forecast_today",
+        forecast_tomorrow: "sensor.solcast_pv_forecast_forecast_tomorrow"
+      };
+    }
     get cardBorder() { return 'rgba(255, 152, 0, 0.2)'; }
     renderContent(states, hass, config) {
 const days = [
@@ -1407,6 +1423,14 @@ const days = [
 
   // 3. Solar APSystems Inverter Cluster & Cooling Card
   class SolarInvertersCard extends BaseSolarCard {
+    static getStubConfig() {
+      return {
+        fan_switch: "switch.inverter_cooling_fan",
+        inverters: [
+          "704000000001", "704000000002", "704000000003", "704000000004"
+        ]
+      };
+    }
     get cardBorder() { return 'rgba(0, 229, 255, 0.25)'; }
     renderContent(states, hass, config) {
 // Store live hass instance from button-card template scope globally
@@ -1814,6 +1838,12 @@ const days = [
 
   // 4. Solar Lifetime Records & Analytics Card
   class SolarAnalyticsCard extends BaseSolarCard {
+    static getStubConfig() {
+      return {
+        lifetime_energy: "sensor.solar_lifetime_energy",
+        lifetime_maximum_power: "sensor.solar_lifetime_maximum_power"
+      };
+    }
     get cardBorder() { return 'rgba(0, 230, 118, 0.25)'; }
     renderContent(states, hass, config) {
 // 1. Live ECU Energy & Peak Power Records
@@ -1989,6 +2019,9 @@ const days = [
 
   // 5. Unified Mission Control Deck (All-in-one)
   class SolarMissionControlDeck extends HTMLElement {
+    static getStubConfig() {
+      return {};
+    }
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
@@ -2038,8 +2071,22 @@ const days = [
   }
   customElements.define('solar-mission-control-deck', SolarMissionControlDeck);
 
+  // Register in HA graphical card picker
+  window.customCards = window.customCards || [];
+  [
+    { type: 'solar-rooftop-card', name: 'Solar Rooftop Topology Card', description: 'Photovoltaic Rooftop Panel Grid & Astronomical Arc' },
+    { type: 'solar-forecast-card', name: 'Solar Solcast Forecast Card', description: 'Solcast PV Forecast & Production Outlook' },
+    { type: 'solar-inverters-card', name: 'Solar Inverters Cluster Card', description: 'APSystems Microinverter Telemetry & Active Cooling' },
+    { type: 'solar-analytics-card', name: 'Solar Lifetime Analytics Card', description: 'Lifetime Energy Milestones & Financial Valuation' },
+    { type: 'solar-mission-control-deck', name: 'Solar Mission Control Deck', description: 'Unified Solar & APSystems All-In-One Deck' }
+  ].forEach(card => {
+    const idx = window.customCards.findIndex(c => c.type === card.type);
+    if (idx >= 0) window.customCards.splice(idx, 1);
+    window.customCards.push(card);
+  });
+
   console.info(
-    '%c SOLAR-CARDS %c v1.0.0 Loaded Successfully ',
+    '%c SOLAR-CARDS %c v1.0.1 Loaded Successfully ',
     'color: white; background: #ff9800; font-weight: bold; border-radius: 4px 0 0 4px;',
     'color: #ff9800; background: #11141a; font-weight: bold; border-radius: 0 4px 4px 0;'
   );

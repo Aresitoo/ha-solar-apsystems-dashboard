@@ -61,38 +61,52 @@ An ultra-responsive, high-density **Solar Photovoltaic & Microinverter Mission C
 
 ---
 
-## 📦 Prerequisites & Required Cards
+## 🚀 1-Click HACS Installation (Recommended)
 
-This entire mission control dashboard is designed with zero bloat. You only need **ONE** custom card from HACS:
+You can now install all modular cards with **1 click via HACS**:
 
-| Requirement | Type | Description | Link |
-|---|---|---|---|
-| **`button-card`** | HACS Frontend | Powers all dynamic SVG rendering, state triggers, and grid layouts | [custom-cards/button-card](https://github.com/custom-cards/button-card) |
+1. In Home Assistant, open **HACS** $\rightarrow$ Click the **Three Dots (⋮)** in the top right $\rightarrow$ **Custom repositories**.
+2. Paste: `https://github.com/Aresitoo/ha-solar-apsystems-dashboard`
+3. Category: **Dashboard** (or **Lovelace** / **Plugin**).
+4. Click **Add**, find **APSystems & Solar Mission Control Cards**, and click **Download**!
 
-### Integrations Used (Optional but Recommended):
-- **APSystems ECU**: Native or custom HACS integration (`sensor.ecu_*` and `sensor.inverter_*`).
-- **Sun**: Native Home Assistant Core integration (`sun.sun`).
-- **Weather**: Any standard weather provider (`weather.home`, Open-Meteo, AEMET, etc.).
-- **Solcast PV Forecast**: Free HACS integration for solar yield forecasting.
-- **Energy Meter**: Shelly EM, Emporia Vue, or Home Assistant Energy meter for grid import/export and solar yield.
+Once installed, all modular cards are available across any of your dashboards with zero dependencies:
+
+### 1. Rooftop Array Topology & Celestial Arc Card
+```yaml
+type: custom:solar-rooftop-card
+```
+
+### 2. Solcast PV Forecast & Generation Outlook Card
+```yaml
+type: custom:solar-forecast-card
+```
+
+### 3. APSystems Microinverter Cluster Diagnostics & Cooling Card
+```yaml
+type: custom:solar-inverters-card
+```
+
+### 4. Lifetime Generation Milestones & Economic ROI Card
+```yaml
+type: custom:solar-analytics-card
+```
+
+### 5. Unified Mission Control Deck (All Cards in One)
+```yaml
+type: custom:solar-mission-control-deck
+```
 
 ---
 
-## 🚀 Quick Start Installation
+## 📋 Alternative: Full YAML View Import (Raw Configuration Editor)
 
-1. Install **`button-card`** via HACS (`HACS -> Frontend -> Explore & Download Repositories -> button-card`).
+If you prefer to import the entire complete dashboard view as raw YAML instead of using the custom cards:
+
+1. Install **`button-card`** via HACS (`HACS -> Frontend -> button-card`).
 2. Download or copy [`solar_mission_control.yaml`](./solar_mission_control.yaml) from this repository.
-3. In Home Assistant, navigate to your desired dashboard, click the **Three Dots (⋮)** in the top right, and select **Edit Dashboard**.
-4. Click **Three Dots (⋮)** again and choose **Raw Configuration Editor**.
-5. Paste the contents of `solar_mission_control.yaml` under the `views:` section:
-   ```yaml
-   views:
-     # ... your existing views ...
-     - title: Solar Mission Control
-       path: solar-mission-control
-       # (paste the rest of solar_mission_control.yaml here)
-   ```
-6. Click **Save** and close the editor. Your dashboard is ready!
+3. In Home Assistant, navigate to your desired dashboard, click **Edit Dashboard** $\rightarrow$ **Raw Configuration Editor**.
+4. Paste the view into your `views:` array and save.
 
 ---
 
